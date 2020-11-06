@@ -1,0 +1,25 @@
+#include "MPU9250.h"
+#include "eeprom_utils.h"
+
+MPU9250 mpu;
+float imu_angle = 0;
+
+void imu_setup() {
+  Wire.begin();
+  mpu.setup();
+
+  loadCalibration();
+}
+
+uint32_t t_update = 0, t_angle = 0;
+void imu_update() {
+  if (millis() - t_update > 10) {
+      mpu.update();
+      t_update = millis();
+  }  
+
+  if (millis() - t_angle > 30) {
+    imu_angle += (mpu.getGyroZ()) * 36e-3;
+    t_angle = millis();
+  }
+}
