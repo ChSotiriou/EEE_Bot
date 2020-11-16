@@ -11,11 +11,11 @@ void imu_setup() {
   loadCalibration();
 }
 
-uint32_t t_update = 0, t_angle = 0;
+uint32_t t_update_imu = 0, t_angle = 0;
 void imu_update() {
-  if (millis() - t_update > 10) {
+  if (millis() - t_update_imu > 10) {
       mpu.update();
-      t_update = millis();
+      t_update_imu = millis();
   }  
 
   if (millis() - t_angle > 30) {

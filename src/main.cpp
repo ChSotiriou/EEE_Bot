@@ -31,6 +31,7 @@ float ERR_1, ERR_2;
 
 void loop() {
   imu_update();
+  distance_update();
 
   if (process_bumpers == 0) {
     switch (state) {
@@ -69,11 +70,10 @@ void loop() {
         break;
         
       case 2:
-      case 4: // Go back until 10cm
-        dist = distance_back(); 
-        if (dist > 13) {
+      case 4: // Go back until 10cm 
+        if (distance_back > 13) {
           motor_drive(-255, -255);
-        } else if (dist < 9) {
+        } else if (distance_back < 9) {
           motor_drive(100, 100);
         } else {
           motor_drive(0, 0); 
