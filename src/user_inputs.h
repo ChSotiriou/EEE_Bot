@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-#define BTN 13
+#define BTN 12
 #define PRESSED false
 
 void user_setup() {
@@ -12,6 +12,10 @@ void user_setup() {
 
 uint8_t user_btn_get() {
     return digitalRead(BTN);
+}
+
+void user_wait_for_button() {
+    while (user_btn_get() != PRESSED) ;
 }
 
 #endif
