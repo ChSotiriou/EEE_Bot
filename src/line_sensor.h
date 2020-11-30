@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-#define LINE_BLACK_ANALOG 550
+#define LINE_BLACK_ANALOG 700
 #define LINE_BLACK true
 #define LINE_SENSOR_COUNT 2
 uint8_t line_sensors[] = {A1, A2};

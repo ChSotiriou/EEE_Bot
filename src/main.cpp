@@ -21,9 +21,9 @@ void loop() {
   line_update();
 
   if (line_values[0] == LINE_BLACK && line_values[1] != LINE_BLACK) { // Turn Right
-    motor_drive(255, 100);
+    motor_drive(255, 50);
   } else if (line_values[0] != LINE_BLACK && line_values[1] == LINE_BLACK) { // Turn Left
-    motor_drive(100, 255);
+    motor_drive(50, 255);
   } else if (line_values[0] == LINE_BLACK && line_values[1] == LINE_BLACK) { // Steight
     motor_drive(255, 255);
   }
