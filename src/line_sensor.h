@@ -8,7 +8,7 @@
 #define LINE_SENSOR_COUNT 4
 
 uint8_t line_sensors[] = {A0, A1, A2, A3};
-uint16_t line_values[LINE_SENSOR_COUNT];
+int16_t line_values[LINE_SENSOR_COUNT];
 
 uint32_t _line_calib_black[LINE_SENSOR_COUNT];
 uint32_t _line_calib_white[LINE_SENSOR_COUNT];
@@ -40,16 +40,26 @@ void line_calibrate_white() {
 }
 
 int32_t line_error = 0; // Reference Point -> Left (index 0)
+float line_position = 0;
 uint32_t t_update_line = 0;
 void line_update() {
     // Update Line Sensors Every 5ms
     if (millis() - t_update_line > 5) { 
         // Get Sensor Values
+        // Switch from high@white -> high@black
         for (int i = 0; i < LINE_SENSOR_COUNT; i++) {
-            line_values[i] = analogRead(line_sensors[i]);
+            line_values[i] = 1023 - map(analogRead(line_sensors[i]), _line_calib_black[i], _line_calib_white[i], 0, 1023);
         }
 
-        // Calculate Weighted Average
+        // Calculate Weighted Average 
+        int32_t numerator = 0;
+        int32_t denominator = 0;
+        for (int i = 0; i < LINE_SENSOR_COUNT; i++) {
+            numerator += (i) * line_values[i];
+            denominator += line_values[i];
+        }
+        line_position = ((float) numerator / (float) denominator) * 10.0;
+
 
 
         t_update_line = millis();
