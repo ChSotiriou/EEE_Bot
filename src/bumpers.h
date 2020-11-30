@@ -1,3 +1,6 @@
+#ifndef BUMBER_H
+#define BUMBER_H
+
 #include <Arduino.h>
 
 #define BUMPER_LEFT 2
@@ -11,3 +14,4 @@ void bumpers_setup() {
 bool bumper_left() {return digitalRead(BUMPER_LEFT);}
 bool bumper_right() {return digitalRead(BUMPER_RIGHT);}
 
+#endif

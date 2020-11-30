@@ -1,3 +1,6 @@
+#ifndef IMU_H
+#define IMU_H
+
 #include "MPU9250.h"
 #include "eeprom_utils.h"
 
@@ -23,3 +26,5 @@ void imu_update() {
     t_angle = millis();
   }
 }
+
+#endif

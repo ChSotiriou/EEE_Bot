@@ -1,3 +1,6 @@
+#ifndef MOTOR_DRIVE_H
+#define MOTOR_DRIVE_H
+
 #include <Arduino.h>
 
 // LEFT MOTOR
@@ -30,3 +33,5 @@ void motor_drive(int PWM_LEFT, int PWM_RIGHT) {
   motor_pwm_left = PWM_LEFT;
   motor_pwm_right = PWM_RIGHT;
 }
+
+#endif
