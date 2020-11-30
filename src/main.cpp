@@ -5,8 +5,12 @@
 #include "bumpers.h"
 #include "line_sensor.h"
 
+#define BTN 13
+
 void setup() {
   Serial.begin(115200);
+
+  pinMode(BTN, INPUT_PULLUP);
 
   imu_setup();
   motors_setup();
