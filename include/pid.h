@@ -23,7 +23,7 @@ void PID_init(PID_s *pid, float P, float I, float D, float *error, float dt) {
     pid->last_compute = 0;
 
     pid->last_error = 0;
-    pid->error = 0;
+    pid->error = error;
 }
 void PID_init(PID_s *pid, float P, float I, float D, float *error) {
     PID_init(pid, P, I, D, error, 5e-3);
