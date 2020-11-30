@@ -2,6 +2,11 @@
 #define LINE_SENSOR_H
 
 #include <Arduino.h>
+#include "pid.h"
+
+PID_s line_controller;
+
+#define LINE_DESIRED_POSITION 15
 
 #define LINE_CALIBRATION_SAMPLES 1000
 #define LINE_BLACK_ANALOG 700
@@ -39,8 +44,7 @@ void line_calibrate_white() {
     }
 }
 
-int32_t line_error = 0; // Reference Point -> Left (index 0)
-float line_position = 0;
+float line_error, line_position;
 uint32_t t_update_line = 0;
 void line_update() {
     // Update Line Sensors Every 5ms
@@ -60,10 +64,15 @@ void line_update() {
         }
         line_position = ((float) numerator / (float) denominator) * 10.0;
 
-
+        // Calculate position error
+        line_error = line_position - LINE_DESIRED_POSITION;
 
         t_update_line = millis();
     }
+}
+
+void line_setup() {
+    PID_init(&line_controller, 10, 0, 0, &line_error);
 }
 
 #endif

@@ -6,6 +6,8 @@
 #include "line_sensor.h"
 #include "user_inputs.h"
 
+#define FOLLOW_BASE_SPEED 200
+
 void setup() {
   Serial.begin(115200);
 
@@ -14,6 +16,7 @@ void setup() {
   distance_setup();
   bumpers_setup();
   user_setup();
+  line_setup();
 
   user_wait_for_button();
   delay(500);
@@ -26,6 +29,14 @@ void setup() {
   delay(500);
   line_calibrate_white();
 
+  for (int i = 0; i < LINE_SENSOR_COUNT; i++) {
+    Serial.print(i);
+    Serial.print("\t");
+    Serial.print(_line_calib_black[i]);
+    Serial.print("\t");
+    Serial.println(_line_calib_white[i]);
+  }
+
   user_wait_for_button();
   delay(500);
 }
@@ -34,5 +45,9 @@ void loop() {
   imu_update();
   line_update();
 
+  float pid = PID_compute(&line_controller, millis());
+  int m_left = constrain(FOLLOW_BASE_SPEED + pid, -255, 255);
+  int m_right = constrain(FOLLOW_BASE_SPEED - pid, -255, 255);
+  motor_drive(m_left, m_right);
 }
 
