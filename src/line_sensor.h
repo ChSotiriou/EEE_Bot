@@ -7,6 +7,7 @@
 PID_s line_controller;
 
 #define LINE_DESIRED_POSITION 0
+#define LINE_COMPUTE_TIME 10e-3
 
 #define LINE_CALIBRATION_SAMPLES 1000
 #define LINE_BLACK_MIN 700
@@ -51,8 +52,8 @@ void line_calibrate_white() {
 float _line_error, _line_position_prev = 0;
 uint32_t t_update_line = 0;
 void line_update() {
-    // Update Line Sensors Every 5ms
-    if (millis() - t_update_line > 5) { 
+    // Update Line Sensors Every 10ms
+    if (millis() - t_update_line > LINE_COMPUTE_TIME * 1000) { 
         // Get Sensor Values
         // Switch from high@white -> high@black
         for (int i = 0; i < LINE_SENSOR_COUNT; i++) {
@@ -82,7 +83,7 @@ void line_update() {
 }
 
 void line_setup() {
-    PID_init(&line_controller, 40, 0, 0, &_line_error, 10e-3);
+    PID_init(&line_controller, 40, 0, 0, &_line_error, LINE_COMPUTE_TIME * 1e-3);
 }
 
 #endif
