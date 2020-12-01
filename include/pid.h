@@ -31,11 +31,10 @@ void PID_init(PID_s *pid, float P, float I, float D, float *error) {
 
 float PID_compute(PID_s *pid, unsigned long int  current_time_ms) {
     float output = pid->last_pid;
-    // float error = *(pid->error);
     if (current_time_ms - pid->last_compute > pid->dt) {
         output = *pid->error * pid->coeff_P + 
                 pid->integral * pid->coeff_I +
-                ( *pid->error - pid->last_error ) * pid->coeff_D;
+                (( *pid->error - pid->last_error ) / pid->dt) * pid->coeff_D;
 
         pid->last_compute = current_time_ms;
     }
