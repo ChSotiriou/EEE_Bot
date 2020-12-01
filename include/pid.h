@@ -1,3 +1,17 @@
+/*
+* PID.h contains a basic PID controller implementation that can be used in
+* any circumstance with no modifications
+*
+* Basic Usage:
+*   // Initialization
+*   PID_s pid;
+*   PID_init(&pid, 10, 0.1, 0.5, &error, 10e-3);
+*
+*   // Control Loop
+*   output = PID_compute(&pid, millis());
+*
+* Made by: Christodoulos Sotiriou
+*/
 #ifndef PID_H
 #define	PID_H
 
