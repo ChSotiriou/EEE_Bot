@@ -18,6 +18,10 @@ void setup() {
   user_setup();
   line_setup();
 
+  if (user_btn_get() == PRESSED) {
+    while (1) motor_drive(255, 255);
+  }
+
   user_wait_for_button();
   delay(500);
 
