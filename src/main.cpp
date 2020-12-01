@@ -10,6 +10,7 @@
 
 void setup() {
   Serial.begin(115200);
+  Wire.begin();
 
   imu_setup();
   motors_setup();

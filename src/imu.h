@@ -8,7 +8,6 @@ MPU9250 mpu;
 float imu_angle = 0;
 
 void imu_setup() {
-  Wire.begin();
   mpu.setup();
 
   loadCalibration();
