@@ -16,6 +16,10 @@ PID_s line_controller;
 #define LINE_SENSOR_MAX 1023
 #define LINE_SENSOR_MIN 0
 
+float COEFF_P = 40;
+float COEFF_I = 0;
+float COEFF_D = 0;
+
 int8_t _line_sensor_weights[] = {-10, -5, 5, 10};
 uint8_t _line_sensors[] = {A0, A1, A2, A3};
 int16_t _line_values[LINE_SENSOR_COUNT];
@@ -83,7 +87,7 @@ void line_update() {
 }
 
 void line_setup() {
-    PID_init(&line_controller, 40, 0, 0, &_line_error, LINE_COMPUTE_TIME * 1e-3);
+    PID_init(&line_controller, COEFF_P, COEFF_I, COEFF_D, &_line_error, LINE_COMPUTE_TIME * 1e-3);
 }
 
 #endif

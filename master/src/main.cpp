@@ -3,7 +3,7 @@
 #include "imu.h"
 #include "distance.h"
 #include "bumpers.h"
-#include "line_sensor.h"
+#include "i2c_line_sensor.h"
 #include "user_inputs.h"
 
 #define FOLLOW_BASE_SPEED 200
@@ -17,7 +17,6 @@ void setup() {
   distance_setup();
   bumpers_setup();
   user_setup();
-  line_setup();
 
   if (user_btn_get() == PRESSED) {
     while (1) motor_drive(255, 255);
@@ -26,21 +25,15 @@ void setup() {
   user_wait_for_button();
   delay(500);
 
+  i2c_line_sensor_setup();
+
   // Line Sensor Calibration
-  line_calibrate_black();
+  i2c_line_calibrate_black();
   motor_drive(-255, -255);
   delay(100);
   motor_drive(0, 0);
   delay(500);
-  line_calibrate_white();
-
-  for (int i = 0; i < LINE_SENSOR_COUNT; i++) {
-    Serial.print(i);
-    Serial.print("\t");
-    Serial.print(_line_calib_black[i]);
-    Serial.print("\t");
-    Serial.println(_line_calib_white[i]);
-  }
+  i2c_line_calibrate_white();
 
   user_wait_for_button();
   delay(500);
@@ -48,9 +41,8 @@ void setup() {
 
 void loop() {
   imu_update();
-  line_update();
 
-  float pid = PID_compute(&line_controller, millis());
+  float pid = i2c_line_compute_pid();
   int m_left = constrain(FOLLOW_BASE_SPEED + pid, -255, 255);
   int m_right = constrain(FOLLOW_BASE_SPEED - pid, -255, 255);
   motor_drive(m_left, m_right);
