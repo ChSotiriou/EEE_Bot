@@ -10,7 +10,6 @@ PID_s line_controller;
 #define LINE_COMPUTE_TIME 10e-3
 
 #define LINE_CALIBRATION_SAMPLES 1000
-#define LINE_BLACK_MIN 700
 #define LINE_SENSOR_COUNT 4
 
 #define LINE_SENSOR_MAX 1023
@@ -19,6 +18,9 @@ PID_s line_controller;
 float COEFF_P = 40;
 float COEFF_I = 0;
 float COEFF_D = 0;
+
+unsigned int LINE_BLACK_MIN = 600;
+
 
 int8_t _line_sensor_weights[] = {-10, -5, 5, 10};
 uint8_t _line_sensors[] = {A0, A1, A2, A3};

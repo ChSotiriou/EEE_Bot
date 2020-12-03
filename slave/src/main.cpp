@@ -40,6 +40,15 @@ float i2c_recv_float(void) {
   return *((float *) &output);
 }
 
+uint16_t i2c_recv_uint16(void) {
+  uint16_t output = 0;
+  for (int i = 0; i < 2; i++) {
+    uint8_t val = (uint8_t) Wire.read();
+    output |= ((uint16_t) val << (i * 8));
+  }
+  return output;
+}
+
 void i2c_recv(int s) {
   String data = "";
   data = Wire.readStringUntil('|');
@@ -56,6 +65,10 @@ void i2c_recv(int s) {
   }
   if (data.substring(0, 5) == "calib") { // Calibrate Sensor
     calib = data[6] == 'b' ? 1 : 2;
+    return;
+  }
+  if (data.substring(0, 5) == "b_min") { // BLACK MIN VALUE
+    LINE_BLACK_MIN = i2c_recv_uint16();
     return;
   }
 }
