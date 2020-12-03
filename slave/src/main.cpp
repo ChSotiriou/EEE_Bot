@@ -71,6 +71,12 @@ void i2c_recv(int s) {
     LINE_BLACK_MIN = i2c_recv_uint16();
     return;
   }
+  if (data.substring(0, 6) == "weight") { // Change weights
+    int8_t weights[4];
+    for (int i = 0; i < LINE_SENSOR_COUNT; i++) {
+      weights[i] = Wire.read();
+    }
+  }
 }
 
 void i2c_req(void) {

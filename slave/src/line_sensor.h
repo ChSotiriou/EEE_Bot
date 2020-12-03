@@ -92,4 +92,10 @@ void line_setup() {
     PID_init(&line_controller, COEFF_P, COEFF_I, COEFF_D, &_line_error, LINE_COMPUTE_TIME * 1e-3);
 }
 
+void line_set_line_weights(int8_t weights[4]) {
+    for (int i = 0; i < LINE_SENSOR_COUNT; i++) {
+        _line_sensor_weights[i] = weights[i];
+    }
+} 
+
 #endif
