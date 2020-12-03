@@ -7,16 +7,20 @@
 PID_s line_controller;
 
 #define LINE_DESIRED_POSITION 0
-#define LINE_COMPUTE_TIME 10e-3
+#define LINE_COMPUTE_TIME 20e-3
 
-#define LINE_CALIBRATION_SAMPLES 1000
-#define LINE_BLACK_MIN 700
+#define LINE_CALIBRATION_SAMPLES 2000
 #define LINE_SENSOR_COUNT 4
+#define LINE_BLACK_MIN 600
+
+#define COEFF_P 16.5
+#define COEFF_I 0
+#define COEFF_D 1
 
 #define LINE_SENSOR_MAX 1023
 #define LINE_SENSOR_MIN 0
 
-int8_t _line_sensor_weights[] = {-10, -5, 5, 10};
+int8_t _line_sensor_weights[] = {-28, -6, 6, 28};
 uint8_t _line_sensors[] = {A0, A1, A2, A3};
 int16_t _line_values[LINE_SENSOR_COUNT];
 
@@ -51,6 +55,7 @@ void line_calibrate_white() {
 
 float _line_error, _line_position_prev = 0;
 uint32_t t_update_line = 0;
+uint16_t line_stop_count = 0;
 void line_update() {
     // Update Line Sensors Every 10ms
     if (millis() - t_update_line > LINE_COMPUTE_TIME * 1000) { 
@@ -70,9 +75,11 @@ void line_update() {
                 denominator += _line_values[i];
             }
         }
+        line_stop_count += denominator == 0;
         if (denominator != 0) {
             line_position = ((float) numerator / (float) denominator);
             _line_position_prev = line_position;
+            line_stop_count = 0;
         }
 
         // Calculate position error
@@ -83,7 +90,7 @@ void line_update() {
 }
 
 void line_setup() {
-    PID_init(&line_controller, 40, 0, 0, &_line_error, LINE_COMPUTE_TIME * 1e-3);
+    PID_init(&line_controller, COEFF_P, COEFF_I, COEFF_D, &_line_error, LINE_COMPUTE_TIME * 1e-3);
 }
 
 #endif
