@@ -13,9 +13,9 @@ PID_s line_controller;
 #define LINE_SENSOR_COUNT 4
 #define LINE_BLACK_MIN 600
 
-#define COEFF_P 16.5
-#define COEFF_I 0
-#define COEFF_D 1
+const float COEFF_P = 16.5;
+const float COEFF_I = 0.0;
+const float COEFF_D = 0.0015;
 
 #define LINE_SENSOR_MAX 1023
 #define LINE_SENSOR_MIN 0
@@ -90,7 +90,7 @@ void line_update() {
 }
 
 void line_setup() {
-    PID_init(&line_controller, COEFF_P, COEFF_I, COEFF_D, &_line_error, LINE_COMPUTE_TIME * 1e-3);
+    PID_init(&line_controller, COEFF_P, COEFF_I, COEFF_D, &_line_error, LINE_COMPUTE_TIME);
 }
 
 #endif
