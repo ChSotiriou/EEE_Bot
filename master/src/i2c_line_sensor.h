@@ -5,11 +5,14 @@
 
 #define I2C_LINE_SENSOR_ADDR 0x8
 
-float COEFF_P = 40;
-float COEFF_I = 0;
-float COEFF_D = 0;
+const float COEFF_P = 38;
+const float COEFF_I = 0;
+const float COEFF_D = 6;
+
+const uint16_t LINE_BLACK_MIN = 750;
 
 void i2c_line_sensor_setup() {
+    // SET COEFF
     Wire.beginTransmission(I2C_LINE_SENSOR_ADDR);
     Wire.write("coeff|");
 
@@ -29,7 +32,16 @@ void i2c_line_sensor_setup() {
     for (int i = 0; i < 4; i++) {
        Wire.write((uint8_t) ((val >> (i * 8)) & 0xff));
     }
+    Wire.endTransmission();
 
+    // SET BLACK MIN LEVEL
+    Wire.beginTransmission(I2C_LINE_SENSOR_ADDR);
+    Wire.write("b_min|");
+
+    // Sent 1 uint16_t (2 bytes each)
+    for (int i = 0; i < 2; i++) {
+        Wire.write((uint8_t) ((LINE_BLACK_MIN >> (i * 8)) & 0xff));
+    }
     Wire.endTransmission();
 }
 

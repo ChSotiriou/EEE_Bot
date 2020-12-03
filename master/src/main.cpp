@@ -6,7 +6,7 @@
 #include "i2c_line_sensor.h"
 #include "user_inputs.h"
 
-#define FOLLOW_BASE_SPEED 200
+#define FOLLOW_BASE_SPEED 220
 
 void setup() {
   Serial.begin(115200);
