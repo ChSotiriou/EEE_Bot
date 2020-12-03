@@ -89,7 +89,7 @@ void line_update() {
 }
 
 void line_setup() {
-    PID_init(&line_controller, COEFF_P, COEFF_I, COEFF_D, &_line_error, LINE_COMPUTE_TIME * 1e-3);
+    PID_init(&line_controller, COEFF_P, COEFF_I, COEFF_D, &_line_error, LINE_COMPUTE_TIME);
 }
 
 void line_set_line_weights(int8_t weights[4]) {
