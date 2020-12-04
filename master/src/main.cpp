@@ -29,6 +29,7 @@ void setup() {
 
   // Line Sensor Calibration
   i2c_line_calibrate_black();
+  delay(1000);
   motor_drive(-255, -255);
   delay(100);
   motor_drive(0, 0);
