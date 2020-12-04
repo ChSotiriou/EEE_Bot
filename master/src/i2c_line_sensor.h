@@ -5,7 +5,7 @@
 
 #define I2C_LINE_SENSOR_ADDR 0x8
 
-const float LINE_COEFF_P = 15;
+const float LINE_COEFF_P = 14;
 const float LINE_COEFF_I = 1;
 const float LINE_COEFF_D = 0.6;
 
@@ -13,7 +13,7 @@ const float LINE_SENSOR_REFRESH_DT = 10e-3;
 
 const uint16_t LINE_BLACK_MIN = 550;
 
-const float line_sensor_weights[] = {-32, -5, 5, 32};
+const float line_sensor_weights[] = {-35, -5, 5, 35};
 
 void i2c_line_sensor_setup() {
     // SET COEFF
