@@ -20,7 +20,7 @@ void setup(void) {
 
 void loop(void) {
   line_update();
-  
+
   if (calib == 1) {
     line_calibrate_black();
     calib = 0;
@@ -76,6 +76,8 @@ void i2c_recv(int s) {
     for (int i = 0; i < LINE_SENSOR_COUNT; i++) {
       weights[i] = Wire.read();
     }
+    line_set_line_weights(weights);
+    return;
   }
 }
 

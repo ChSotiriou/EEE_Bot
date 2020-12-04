@@ -9,7 +9,7 @@ PID_s line_controller;
 #define LINE_DESIRED_POSITION 0
 #define LINE_COMPUTE_TIME 10e-3
 
-#define LINE_CALIBRATION_SAMPLES 1000
+#define LINE_CALIBRATION_SAMPLES 2000
 #define LINE_SENSOR_COUNT 4
 
 #define LINE_SENSOR_MAX 1023
@@ -19,15 +19,15 @@ float COEFF_P = 40;
 float COEFF_I = 0;
 float COEFF_D = 0;
 
-unsigned int LINE_BLACK_MIN = 600;
+int16_t LINE_BLACK_MIN = 600;
 
 
 int8_t _line_sensor_weights[] = {-10, -5, 5, 10};
 uint8_t _line_sensors[] = {A0, A1, A2, A3};
 int16_t _line_values[LINE_SENSOR_COUNT];
 
-uint32_t _line_calib_black[LINE_SENSOR_COUNT];
-uint32_t _line_calib_white[LINE_SENSOR_COUNT];
+uint32_t _line_calib_black[LINE_SENSOR_COUNT] = {0, 0, 0, 0};
+uint32_t _line_calib_white[LINE_SENSOR_COUNT] = {1023, 1023, 1023, 1023};
 
 void line_calibrate_black() {
     // Calibrate Black
