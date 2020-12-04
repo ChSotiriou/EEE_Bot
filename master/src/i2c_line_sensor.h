@@ -5,13 +5,15 @@
 
 #define I2C_LINE_SENSOR_ADDR 0x8
 
-const float COEFF_P = 14;
-const float COEFF_I = 1;
-const float COEFF_D = 0.6;
+const float LINE_COEFF_P = 15;
+const float LINE_COEFF_I = 1;
+const float LINE_COEFF_D = 0.6;
+
+const float LINE_SENSOR_REFRESH_DT = 10e-3; 
 
 const uint16_t LINE_BLACK_MIN = 550;
 
-const int8_t line_sensor_weights[] = {-30, -5, 5, 30};
+const int8_t line_sensor_weights[] = {-32, -5, 5, 32};
 
 void i2c_line_sensor_setup() {
     // SET COEFF
@@ -20,17 +22,17 @@ void i2c_line_sensor_setup() {
 
     // Sent 3 floats P, I, D (4 bytes each)
     // Sent P
-    uint32_t val = *((uint32_t *) &COEFF_P);
+    uint32_t val = *((uint32_t *) &LINE_COEFF_P);
     for (int i = 0; i < 4; i++) {
         Wire.write((uint8_t) ((val >> (i * 8)) & 0xff));
     }
     // Sent I
-    val = *((uint32_t *) &COEFF_I);
+    val = *((uint32_t *) &LINE_COEFF_I);
     for (int i = 0; i < 4; i++) {
         Wire.write((uint8_t) ((val >> (i * 8)) & 0xff));
     }
     // Sent D
-    val = *((uint32_t *) &COEFF_D);
+    val = *((uint32_t *) &LINE_COEFF_D);
     for (int i = 0; i < 4; i++) {
        Wire.write((uint8_t) ((val >> (i * 8)) & 0xff));
     }
@@ -57,6 +59,18 @@ void i2c_line_sensor_setup() {
         Wire.write(line_sensor_weights[i]);
     }
     Wire.endTransmission();
+
+    // SET REFRESH DT
+    Wire.beginTransmission(I2C_LINE_SENSOR_ADDR);
+    Wire.write("dt|");
+
+    // Sent float (1byte)
+    val = *((uint32_t *) &LINE_SENSOR_REFRESH_DT);
+    for (int i = 0; i < 4; i++) {
+        Wire.write((uint8_t) ((val >> (i * 8)) & 0xff));
+    }
+    Wire.endTransmission();
+
 }
 
 void i2c_line_calibrate_black() {

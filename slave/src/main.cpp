@@ -79,6 +79,10 @@ void i2c_recv(int s) {
     line_set_line_weights(weights);
     return;
   }
+  if (data.substring(0, 2) == "dt") {
+    LINE_COMPUTE_TIME = i2c_recv_float();
+    return;
+  }
 }
 
 void i2c_req(void) {

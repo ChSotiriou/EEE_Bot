@@ -7,13 +7,14 @@
 PID_s line_controller;
 
 #define LINE_DESIRED_POSITION 0
-#define LINE_COMPUTE_TIME 10e-3
 
 #define LINE_CALIBRATION_SAMPLES 2000
 #define LINE_SENSOR_COUNT 4
 
 #define LINE_SENSOR_MAX 1023
 #define LINE_SENSOR_MIN 0
+
+float LINE_COMPUTE_TIME = 10e-3;
 
 float COEFF_P = 40;
 float COEFF_I = 0;
