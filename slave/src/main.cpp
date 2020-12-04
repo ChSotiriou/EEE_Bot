@@ -72,9 +72,9 @@ void i2c_recv(int s) {
     return;
   }
   if (data.substring(0, 6) == "weight") { // Change weights
-    int8_t weights[4];
+    float weights[4];
     for (int i = 0; i < LINE_SENSOR_COUNT; i++) {
-      weights[i] = Wire.read();
+      weights[i] = i2c_recv_float();
     }
     line_set_line_weights(weights);
     return;

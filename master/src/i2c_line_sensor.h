@@ -13,7 +13,7 @@ const float LINE_SENSOR_REFRESH_DT = 10e-3;
 
 const uint16_t LINE_BLACK_MIN = 550;
 
-const int8_t line_sensor_weights[] = {-32, -5, 5, 32};
+const float line_sensor_weights[] = {-32, -5, 5, 32};
 
 void i2c_line_sensor_setup() {
     // SET COEFF
@@ -54,9 +54,12 @@ void i2c_line_sensor_setup() {
     Wire.beginTransmission(I2C_LINE_SENSOR_ADDR);
     Wire.write("weight|");
 
-    // Sent 1 uint16_t (2 bytes each)
+    // Sent 4 floats (4 bytes each)
     for (int i = 0; i < 4; i++) {
-        Wire.write(line_sensor_weights[i]);
+        val = *((uint32_t *) &line_sensor_weights[i]);
+        for (int j = 0; j < 4; j++) {
+            Wire.write((uint8_t) ((val >> (j * 8)) & 0xff));
+        }
     }
     Wire.endTransmission();
 

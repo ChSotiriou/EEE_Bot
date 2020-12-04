@@ -23,7 +23,7 @@ float COEFF_D = 0;
 int16_t LINE_BLACK_MIN = 600;
 
 
-int8_t _line_sensor_weights[] = {-10, -5, 5, 10};
+float _line_sensor_weights[] = {-10, -5, 5, 10};
 uint8_t _line_sensors[] = {A0, A1, A2, A3};
 int16_t _line_values[LINE_SENSOR_COUNT];
 
@@ -98,7 +98,7 @@ void line_setup() {
     PID_init(&line_controller, COEFF_P, COEFF_I, COEFF_D, &_line_error, LINE_COMPUTE_TIME);
 }
 
-void line_set_line_weights(int8_t weights[4]) {
+void line_set_line_weights(float weights[4]) {
     for (int i = 0; i < LINE_SENSOR_COUNT; i++) {
         _line_sensor_weights[i] = weights[i];
     }
