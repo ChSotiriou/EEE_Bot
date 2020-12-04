@@ -69,17 +69,22 @@ void i2c_line_calibrate_white() {
     Wire.endTransmission();
 }
 
+uint8_t line_safety = 0;
 float i2c_line_compute_pid() {
     Wire.beginTransmission(I2C_LINE_SENSOR_ADDR);
     Wire.write("pid|");
     Wire.endTransmission();
 
     // LSB comes first
-    Wire.requestFrom(I2C_LINE_SENSOR_ADDR, sizeof(float));uint32_t output = 0;
+    Wire.requestFrom(I2C_LINE_SENSOR_ADDR, sizeof(float) + sizeof(uint8_t));
+    uint32_t output = 0;
     for (int i = 0; i < 4; i++) {
         uint8_t val = (uint8_t) Wire.read();
         output |= ((uint32_t) val << (i * 8));
     }
+
+    line_safety = Wire.read();
+
     return *((float *) &output);
 }
 

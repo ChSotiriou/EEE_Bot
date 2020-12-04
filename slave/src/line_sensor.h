@@ -57,6 +57,7 @@ void line_calibrate_white() {
 
 float _line_error, _line_position_prev = 0;
 uint32_t t_update_line = 0;
+uint8_t line_safety = 0;
 void line_update() {
     // Update Line Sensors Every 10ms
     if (millis() - t_update_line > LINE_COMPUTE_TIME * 1000) { 
@@ -79,6 +80,10 @@ void line_update() {
         if (denominator != 0) {
             line_position = ((float) numerator / (float) denominator);
             _line_position_prev = line_position;
+            line_safety = 0;
+        } else {
+            // Add 1 if it's less than 255
+            line_safety += line_safety == 255 ? 0 : 1;
         }
 
         // Calculate position error

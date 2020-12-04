@@ -88,6 +88,7 @@ void i2c_req(void) {
     for (int i = 0; i < 4; i++) {
         Wire.write((uint8_t) ((val >> (i * 8)) & 0xff));
     }
+    Wire.write(line_safety);
   }
   req_code = "";
 }
