@@ -44,8 +44,7 @@ void loop() {
   imu_update();
 
   float pid = i2c_line_compute_pid();
-  Serial.println(line_safety);
-  if (line_safety < 30) {
+  if (line_safety < 40) {
     int m_left = constrain(FOLLOW_BASE_SPEED + pid, -255, 255);
     int m_right = constrain(FOLLOW_BASE_SPEED - pid, -255, 255);
     motor_drive(m_left, m_right);
