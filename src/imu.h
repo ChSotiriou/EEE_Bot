@@ -1,25 +1,41 @@
+#ifndef IMU_H
+#define IMU_H 
+
 #include "MPU9250.h"
 #include "eeprom_utils.h"
 
-MPU9250 mpu;
-float imu_angle = 0;
+#define MPU9250_ADDR 0x68
 
-void imu_setup() {
+MPU9250 mpu;
+
+struct IMU_s {
+  float yaw = 0, pitch = 0;
+  uint32_t t_update = 0, t_angle = 0;
+};
+
+void imu_setup(IMU_s *imu) {
   Wire.begin();
-  mpu.setup();
+
+  imu->yaw = 0;
+  imu->pitch = 0;
+  imu->t_update = 0;
+  imu->t_angle = 0;
+  mpu.setup(MPU9250_ADDR);
 
   loadCalibration();
 }
 
-uint32_t t_update_imu = 0, t_angle = 0;
-void imu_update() {
-  if (millis() - t_update_imu > 10) {
+void imu_update(IMU_s *imu) {
+  if (millis() - imu->t_update > 10) {
       mpu.update();
-      t_update_imu = millis();
+      imu->pitch = mpu.getRoll(); // IMU roll translates to robot pitch
+      imu->t_update = millis();
   }  
 
-  if (millis() - t_angle > 30) {
-    imu_angle += (mpu.getGyroZ()) * 36e-3;
-    t_angle = millis();
+  if (millis() - imu->t_angle > 30) {
+    imu->yaw += (mpu.getGyroZ()) * 36e-3;
+    imu->t_angle = millis();
   }
 }
+
+#endif

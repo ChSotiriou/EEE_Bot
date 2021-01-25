@@ -1,3 +1,6 @@
+#ifndef DISTANCE_H
+#define DISTANCE_H
+
 #include <Arduino.h>
 
 #define TRIG_BACK 9
@@ -32,3 +35,5 @@ void distance_update() {
         t_update_distance = millis();
     }
 }
+
+#endif
