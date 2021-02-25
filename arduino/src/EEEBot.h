@@ -21,8 +21,8 @@ COMMAND:
 */
 
 // Commands
-#define EEEBOT_DIST_GET       0x1
-#define EEEBOT_DIST_CONT_ON   0x2
-#define EEEBOT_DIST_CONT_OFF  0x3  
+#define EEEBOT_DIST_GET       0x1 << 3
+#define EEEBOT_DIST_CONT_ON   0x2 << 3
+#define EEEBOT_DIST_CONT_OFF  0x3 << 3
 
 #endif
