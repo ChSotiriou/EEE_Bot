@@ -12,18 +12,21 @@ void setContinuous(ultrasonic_s *dist, uint8_t cont) {
   dist->i2c->i2cWrite((char *) &toSend, 1);
 }
 
-float getDistance(ultrasonic_s *dist) {
-  uint8_t toSend = EEEBOT_DIST;
-  toSend |= EEEBOT_DIST_GET;
-  dist->i2c->i2cWrite((char *) &toSend, 1);
-  
-  float ret = 0;
-  dist->i2c->i2cRead((char *) &ret, 4);
+void getDistance(ultrasonic_s *dist) {
+  if (millis() - dist->last_req > ULTRASONIC_DT) {
+    uint8_t toSend = EEEBOT_DIST;
+    toSend |= EEEBOT_DIST_GET;
+    dist->i2c->i2cWrite((char *) &toSend, 1);
+    
+    float ret = 0;
+    dist->i2c->i2cRead((char *) &ret, 4);
 
-  #ifdef DEBUG
-    printf("[+] Ultrasonic Get Distance: %.3f\n", ret);
-  #endif
+    dist->distance = ret;
+    dist->last_req = millis();
 
-  return ret;
+    #ifdef DEBUG
+      printf("[+] Ultrasonic Get Distance: %.3f\n", ret);
+    #endif
+  }
 }
 

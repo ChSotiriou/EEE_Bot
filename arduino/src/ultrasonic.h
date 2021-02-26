@@ -3,11 +3,14 @@
 
 #include <Arduino.h>
 
+#define ULTRASONIC_DT 50
+
 struct ultrasonic_s
 {
   uint8_t echo, trig;
   uint8_t continuous;
   float distance;
+  uint32_t last_req = 0;
 };
 
 void ultrasonic_setup (
@@ -22,15 +25,19 @@ void ultrasonic_setup (
   pinMode(dist->echo, INPUT);
 }
 
-float ultrasonic_get_distance(ultrasonic_s *dist) {
-  digitalWrite(dist->trig, LOW);
-  delayMicroseconds(2);
-  digitalWrite(dist->trig, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(dist->trig, LOW);
+void ultrasonic_get_distance(ultrasonic_s *dist) {
+  if (millis() - dist->last_req > ULTRASONIC_DT) {
+    digitalWrite(dist->trig, LOW);
+    delayMicroseconds(2);
+    digitalWrite(dist->trig, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(dist->trig, LOW);
 
-  long duration = pulseIn(dist->echo, HIGH);
-  dist->distance = (float) duration / 29.0 / 2.0;
+    long duration = pulseIn(dist->echo, HIGH);
+    dist->distance = (float) duration / 29.0 / 2.0;
+  
+    dist->last_req = millis();
+  }
 }
 
 void ultrasonic_update(ultrasonic_s *dist) {

@@ -20,7 +20,7 @@ pi2c.o: $(LIB)/pi2c/pi2c.cpp
 	$(CC) $(CFLAGS) $(DEF) -c $^ -o $@
 
 ultrasonic.o: $(LIB)/ultrasonic/ultrasonic.cpp
-	$(CC) $(CFLAGS) $(DEF) -c $(INC) $^ -o $@
+	$(CC) $(CFLAGS) $(LD) $(DEF) -c $(INC) $^ -o $@
 
 clean:
 	$(RM) *.o

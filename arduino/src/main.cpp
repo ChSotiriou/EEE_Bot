@@ -15,7 +15,7 @@ void setup() {
 void loop() {
   ultrasonic_update(&dist);
 
-  Serial.println(dist.distance);
+  // Serial.println(dist.distance);
 }
 
 void i2c_req() {
@@ -33,7 +33,6 @@ void i2c_recv(int cnt) {
   }
 
   uint8_t mode = recved & EEEBOT_MODE;
-  
   switch (mode) {
     case EEEBOT_DRIVE:
       break;
@@ -45,7 +44,7 @@ void i2c_recv(int cnt) {
 }
 
 uint8_t i2c_distance_manager(int recved) {
-  uint8_t cmd = (recved & EEEBOT_DIST_CMD) >> 3;
+  uint8_t cmd = (recved & EEEBOT_DIST_CMD);
 
   switch (cmd)
   {
