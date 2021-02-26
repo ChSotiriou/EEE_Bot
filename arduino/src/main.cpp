@@ -14,6 +14,8 @@ void setup() {
 
 void loop() {
   ultrasonic_update(&dist);
+
+  Serial.println(dist.distance);
 }
 
 void i2c_req() {
