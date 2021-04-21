@@ -15,17 +15,32 @@ struct colorRange {
 };
 
 const struct colorRange RED = {
-  0, 14,
+  0, 10,
+  180, 255,
+  120, 255
+};
+const struct colorRange ORANGE = {
+  10, 20,
+  180, 255,
+  120, 255
+};
+const struct colorRange YELLOW = {
+  20, 45,
   180, 255,
   120, 255
 };
 const struct colorRange GREEN = {
-  40, 70,
+  45, 70,
   180, 255,
   120, 255
 };
 const struct colorRange BLUE = {
-  105, 135,
+  71, 130,
+  180, 255,
+  120, 255
+};
+const struct colorRange PURPLE = {
+  130, 165,
   180, 255,
   120, 255
 };
