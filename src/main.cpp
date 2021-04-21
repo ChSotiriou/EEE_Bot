@@ -6,16 +6,9 @@ Color Detector
 #include <stdio.h>
 #include <iostream>
 
-#include "colorRanges.h"
-
 #include "opencv2/core.hpp"
 #include "opencv2/highgui.hpp"
 #include "opencv2/imgproc.hpp"
-
-#define COLOR_COUNT 6
-const char *color[COLOR_COUNT] = {
-    "red", "orange", "yellow", "green", "blue", "purple"
-};
 
 int main(int argc, char **argv)
 {
@@ -27,34 +20,39 @@ int main(int argc, char **argv)
 
     cv::Mat frame = cv::imread(argv[1]); // Open an image file and store in a new matrix variable
 
-    cv::Mat frameHSV;       // Convert the frame to HSV and apply the limits
-    cv::cvtColor(frame, frameHSV, cv::COLOR_BGR2HSV);
-     
-    int pixelCount[COLOR_COUNT]; 
-    pixelCount[0] = getPixelCount(frameHSV, RED);
-    pixelCount[1] = getPixelCount(frameHSV, ORANGE);
-    pixelCount[2] = getPixelCount(frameHSV, YELLOW);
-    pixelCount[3] = getPixelCount(frameHSV, GREEN);
-    pixelCount[4] = getPixelCount(frameHSV, BLUE);
-    pixelCount[5] = getPixelCount(frameHSV, PURPLE);
+    cv::namedWindow("Shape Detection Tester");
 
-    int maxi = 0;
-    for (int i = 0; i < COLOR_COUNT; i++) {
-        if (pixelCount[i] > pixelCount[maxi]) {
-            maxi = i;
+    int gaussianSize = 11;    
+    cv::createTrackbar("Gaussian Size", "Shape Detection Tester", &gaussianSize, 15, NULL);
+    
+    int threshold1 = 150, threshold2 = 255;
+    cv::createTrackbar("Threshold 1", "Shape Detection Tester", &threshold1, 300, NULL);
+    cv::createTrackbar("Threshold 2", "Shape Detection Tester", &threshold2, 300, NULL);
+
+
+    while (1) {
+        gaussianSize    = cv::getTrackbarPos("Gaussian Size", "Shape Detection Tester");
+        threshold1      = cv::getTrackbarPos("Threshold 1", "Shape Detection Tester");
+        threshold2      = cv::getTrackbarPos("Threshold 2", "Shape Detection Tester");
+
+        cv::Mat processed;
+        cv::GaussianBlur(frame, processed, cv::Size(gaussianSize, gaussianSize), 0, 0);
+        cv::cvtColor(processed, processed, cv::COLOR_BGR2GRAY);
+
+        cv::Canny(processed, processed, threshold1, threshold2, 3);
+
+        cv::Mat combined, processed_bgr;
+        cv::cvtColor(processed, processed_bgr, cv::COLOR_GRAY2BGR);
+        cv::hconcat(frame, processed_bgr, combined); 
+
+        cv::imshow("Shape Detection Tester", combined);
+
+        if (cv::waitKey(1) && 0xff == 27) {
+            break;
         }
     }
-    printf("The majority of the image is %s\n", color[maxi]);
 
-    printf(
-    "\
-    Red Pixels      %d\n\
-    Orange Pixels   %d\n\
-    Yellow Pixels   %d\n\
-    Green Pixels    %d\n\
-    Blue Pixels     %d\n\
-    Purple Pixels   %d\n\
-    \n", pixelCount[0], pixelCount[1], pixelCount[2], pixelCount[3], pixelCount[4], pixelCount[5]);
+    cv::destroyAllWindows();
 
 	return 0;
 }

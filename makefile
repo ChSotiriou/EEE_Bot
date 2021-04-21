@@ -5,7 +5,7 @@ SRC=src
 OBJ=obj
 BINDIR=bin
 
-BIN=$(BINDIR)/colorDetector
+BIN=$(BINDIR)/shapeDetector
 SRCS=$(wildcard $(SRC)/*.cpp)
 OBJS=$(patsubst $(SRC)/%.cpp, $(OBJ)/%.o, $(SRCS))
 

@@ -1,0 +1,6 @@
+#ifndef SHAPEDETECTOR_H
+#define SHAPEDETECTOR_H
+
+
+
+#endif /* SHAPEDETECTOR_H */
