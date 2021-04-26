@@ -5,7 +5,7 @@ SRC=src
 OBJ=obj
 BINDIR=bin
 
-BIN=$(BINDIR)/shapeDetector
+BIN=$(BINDIR)/symbolsDetect
 SRCS=$(wildcard $(SRC)/*.cpp)
 OBJS=$(patsubst $(SRC)/%.cpp, $(OBJ)/%.o, $(SRCS))
 
@@ -22,5 +22,4 @@ $(OBJ)/%.o: $(SRC)/%.cpp
 clean:
 	$(RM) -r $(OBJ)/* $(BINDIR)/*
 
-print:
-	echo $(OBJS)
+rebuild:clean all

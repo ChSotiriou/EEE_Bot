@@ -4,11 +4,12 @@
 #include <stdio.h>
 #include <iostream>
 
+#include "shapeDetector.h"
+#include "colorRanges.h"
+#include "opencv_aee.hpp"
+
 #include "opencv2/core.hpp"
 #include "opencv2/highgui.hpp"
 #include "opencv2/imgproc.hpp"
-
-typedef std::vector<std::vector<cv::Point> > contours_t;
-typedef std::vector<cv::Vec4i> hierarchy_t;
 
 #endif /* MAIN_HPP */
