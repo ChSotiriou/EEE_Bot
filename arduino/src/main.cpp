@@ -5,23 +5,31 @@ void setup() {
   Wire.begin(I2C_ADDR);
 
   Wire.onReceive(i2c_recv);
-  Wire.onRequest(i2c_req);
 
   toSend = 0;
 
-  ultrasonic_setup(&dist, ECHO, TRIG);
+  imu_setup();
   drive_setup(&motors, PWMA_LEFT, PWMA_RIGHT, PWMB_LEFT, PWMB_RIGHT);
+  // PID_init(&pid, KP, KI, KD, &imu_error, 10e-3);
 }
 
+uint32_t last_print = 0;
 void loop() {
-  ultrasonic_update(&dist);
   drive(&motors);
-}
+  imu_update();
 
-void i2c_req() {
-  if (toSend == SEND_DIST) {
-    i2c_sent_float(dist.distance);
+  if (millis() - last_print > 100) {
+    Serial.println(imu_angle);
+
+    last_print = millis();
   }
+
+  imu_error = imu_desired - imu_angle;
+  // float output = PID_compute(&pid, millis());
+
+  // drive_s motor_power = {
+  //   motors.l - output
+  // }
 }
 
 void i2c_recv(int cnt) {
@@ -41,72 +49,29 @@ void i2c_recv(int cnt) {
 
     uint8_t mode = recved & EEEBOT_MODE;
     switch (mode) {
-      case EEEBOT_DRIVE:
-        i2c_drive_manager(recved);
+      case TURN90_LEFT:
+
         break;
       
-      case EEEBOT_DIST:
-        i2c_distance_manager(recved);
+      case TURN90_RIGHT:
+        
+        break;
+
+      case TURN180:
+        
+        break;
+
+      case TURN360:
+        
+        break;
+
+      case FORWARD_N:
+        
+        break;
+
+      case BACKWARD_N:
+        
         break;
     }
   }
-}
-
-uint8_t i2c_drive_manager(int recved) {
-  uint8_t cmd = (recved & EEEBOT_DRIVE_CMD);
-
-  switch (cmd)
-  {
-  case EEEBOT_DRIVE_SETALL:
-    toRecv = RECV_ALL;    
-    break;
-  
-  case EEEBOT_DRIVE_SETL:
-    toRecv = RECV_L;
-    break;
-
-  case EEEBOT_DRIVE_SETR:
-    toRecv = RECV_R;
-    break;
-
-  default:
-    // error
-    return 1;
-    break;
-  }
-
-  return 0;
-}
-
-uint8_t i2c_distance_manager(int recved) {
-  uint8_t cmd = (recved & EEEBOT_DIST_CMD);
-
-  switch (cmd)
-  {
-  case EEEBOT_DIST_GET:
-    if (dist.continuous == 0) {
-      ultrasonic_get_distance(&dist);
-    }
-
-    toSend = SEND_DIST;
-    
-    break;
-  
-  case EEEBOT_DIST_CONT_ON:
-    Serial.println("[+] Continuous On");
-    dist.continuous = true;
-    break;
-
-  case EEEBOT_DIST_CONT_OFF:
-    Serial.println("[+] Continuous Off\n");
-    dist.continuous = false;
-    break;
-
-  default:
-    // error
-    return 1;
-    break;
-  }
-
-  return 0;
 }

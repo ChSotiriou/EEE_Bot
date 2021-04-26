@@ -26,39 +26,10 @@ struct PID_s {
     unsigned long int last_compute;
 };
 
-void PID_init(PID_s *pid, float P, float I, float D, float *error, float dt) {
-    pid->coeff_P = P;
-    pid->coeff_I = I;
-    pid->coeff_D = D;
+void PID_init(PID_s *pid, float P, float I, float D, float *error, float dt);
 
-    pid->integral = 0.0;
-    
-    pid->dt = dt;
-    pid->last_compute = 0;
+void PID_init(PID_s *pid, float P, float I, float D, float *error);
 
-    pid->last_pid = 0.0;
-
-    pid->last_error = 0.0;
-    pid->error = error;
-}
-void PID_init(PID_s *pid, float P, float I, float D, float *error) {
-    PID_init(pid, P, I, D, error, 5e-3);
-}
-
-float PID_compute(PID_s *pid, unsigned long int  current_time_ms) {
-    float output = pid->last_pid;
-    if (current_time_ms - pid->last_compute > pid->dt) {
-        output = *pid->error * pid->coeff_P + 
-                pid->integral * pid->coeff_I +
-                (( *pid->error - pid->last_error ) / pid->dt) * pid->coeff_D;
-
-        pid->last_compute = current_time_ms;
-        pid->last_error = *pid->error;
-        pid->integral += *pid->error * pid->dt;
-    }
-
-    pid->last_pid = output;
-    return output;
-}
+float PID_compute(PID_s *pid, unsigned long int  current_time_ms);
 
 #endif

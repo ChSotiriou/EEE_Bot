@@ -4,7 +4,8 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#include "ultrasonic.h"
+#include "imu.h"
+#include "pid.h"
 #include "drive.h"
 #include "EEEBot.h"
 #include "i2c_help.h"
@@ -27,13 +28,17 @@ enum RECV{RECV_NONE, RECV_L, RECV_R, RECV_ALL};
 
 uint8_t toSend, toRecv;
 
-ultrasonic_s dist;
 drive_s motors;
 
-void i2c_req();
+#define KP 10
+#define KI 0
+#define KD 0
+// PID_s pid;
+
+float imu_desired = 0;
+float imu_error = 0;
+
 void i2c_recv(int recved);
-uint8_t i2c_drive_manager(int recved);
-uint8_t i2c_distance_manager(int recved);
 
 #endif // MAIN_H
 
