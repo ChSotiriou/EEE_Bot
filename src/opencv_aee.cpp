@@ -252,8 +252,8 @@ Mat transformPerspective(std::vector<Point> boundingContour, Mat frame, int x_si
     if(boundingContour.size() != 4)
     {
         // Error the contour has too many points. Only 4 are allowed
-        Mat emptyMat;
-        return emptyMat;
+        // Mat emptyMat;
+        return frame;
     }
 
     Mat symbol(y_size,x_size,CV_8UC1, Scalar(0));

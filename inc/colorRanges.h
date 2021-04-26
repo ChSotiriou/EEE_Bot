@@ -44,11 +44,18 @@ const struct colorRange PURPLE = {
   130, 200,
   70, 100
 };
+
 const struct colorRange MAGIC_CARD = {
     140, 168,
     68, 255,
     0, 173
 };
+const struct colorRange MAGIC_IMG = {
+    145, 155,
+    250, 255,
+    250, 255
+};
+
 
 /*
 Determine the number of pixels in a provided range.
