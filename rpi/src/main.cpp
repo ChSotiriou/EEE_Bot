@@ -10,12 +10,14 @@ int main(int argc, char **argv) {
     robot_s bot = {&i2c};
 
     wiringPiSetup();
-    setupCamera(320, 240);
+    setupCamera(320 * IMAGE_RESIZE, 240 * IMAGE_RESIZE);
     shapeDetectionSetup();
 
     uint32_t shapeDetect_time = millis();
     
     cv::namedWindow("Symbols");
+
+    printf("[+] Starting\n");
 
     while (1) {
         
@@ -29,18 +31,19 @@ int main(int argc, char **argv) {
         contours_s contours =  getContours(colorFiltered);
         
         // Transform Frame
-        if (contours.contours.size() != 0 && contours.contours[0].size()) {
+        if (contours.contours.size() != 0 && contours.contours[0].size() == 4) {
             // cv::drawContours(frameContours, contours.contours, 0, {0, 255, 255}, 4);
-            frame = transformPerspective(contours.contours[0], colorFiltered, 320, 240);
+            frame = transformPerspective(contours.contours[0], colorFiltered, 320 * IMAGE_RESIZE, 240 * IMAGE_RESIZE);
             
             cv::cvtColor(frame, frame, cv::COLOR_BGR2GRAY);
             int match = checkImageMatch(frame);
             if (match != -1) {
-                printf("%d\n", match);
                 /* 
                     Send Command to Arduino
                 */
                 if (millis() - shapeDetect_time > 1000) {
+                    printf("[i] Found Match: %d\n", match);
+
                     generateArduinoCommand(&bot, match);
 
                     shapeDetect_time = millis();

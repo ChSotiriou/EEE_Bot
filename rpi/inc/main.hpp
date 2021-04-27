@@ -17,4 +17,6 @@
 #include "opencv2/highgui.hpp"
 #include "opencv2/imgproc.hpp"
 
+const float IMAGE_RESIZE = 1;
+
 #endif /* MAIN_HPP */

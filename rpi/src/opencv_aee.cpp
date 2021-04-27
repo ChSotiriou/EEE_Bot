@@ -65,7 +65,7 @@ Point templateMatch(Mat frame, Mat templ, int method, double threshold)
     matchTemplate(frame, templ, result, method);
 
     minMaxLoc(result, &minVal, &maxVal, &minLoc, &maxLoc);
-    printf("mat:%f ", maxVal);
+    // printf("mat:%f ", maxVal);
 	//printf("%f - ", minVal);
 
     if((maxVal >= threshold) || ((minVal <= threshold) && (method == TM_SQDIFF || method == TM_SQDIFF_NORMED)))

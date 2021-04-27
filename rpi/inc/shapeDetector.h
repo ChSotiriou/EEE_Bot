@@ -3,6 +3,7 @@
 
 #include "colorRanges.h"
 #include "opencv_aee.hpp"
+#include "main.hpp"
 
 #include "opencv2/core.hpp"
 #include "opencv2/highgui.hpp"
@@ -10,7 +11,7 @@
 
 #define CONTOUR_MIN_AREA 1000
 #define SYMBOL_CNT 10
-#define MATCH_PERCENTAGE 60
+#define MATCH_PERCENTAGE 55
 
 typedef std::vector<cv::Point> contour_t;
 typedef std::vector<contour_t> contours_t;

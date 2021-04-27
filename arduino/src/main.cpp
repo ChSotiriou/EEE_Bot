@@ -10,8 +10,6 @@ void setup() {
   drive_setup(&motors, PWMA_LEFT, PWMA_RIGHT, PWMB_LEFT, PWMB_RIGHT);
   PID_init(&pid, KP, KI, KD, &imu_error, 10e-3);
   pinMode(PUSH_BTN, INPUT_PULLUP);
-
-  // while (digitalRead(PUSH_BTN));
 }
 
 uint32_t last_print = 0;

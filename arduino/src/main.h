@@ -24,9 +24,9 @@
 
 drive_s motors;
 
-#define KP 10
+#define KP 15
 #define KI 0
-#define KD 0
+#define KD 3
 PID_s pid;
 
 float imu_desired = 0;
