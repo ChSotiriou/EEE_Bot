@@ -3,7 +3,12 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <time.h>
+#include <wiringPi.h>
 
+#include "pi2c.h"
+
+#include "robotControl.h"
 #include "shapeDetector.h"
 #include "colorRanges.h"
 #include "opencv_aee.hpp"

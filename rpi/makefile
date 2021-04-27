@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-g -Wall $(shell pkg-config --cflags --libs opencv) -Iinc
+CFLAGS=-g -Wall $(shell pkg-config --cflags --libs opencv) -l wiringPi -Iinc
 
 SRC=src
 OBJ=obj

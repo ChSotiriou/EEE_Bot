@@ -11,12 +11,12 @@ COMMAND:
 
 #define EEEBOT_MODE 0b111
 
-#define TURN90_LEFT     0
-#define TURN90_RIGHT    1
-#define TURN180         2
-#define TURN360         3
-#define FORWARD_N       4
-#define BACKWARD_N      5
+#define EEEBOT_TURN90_LEFT     0
+#define EEEBOT_TURN90_RIGHT    1
+#define EEEBOT_TURN180         2
+#define EEEBOT_TURN360         3
+#define EEEBOT_FORWARD_N       4
+#define EEEBOT_BACKWARD_N      5
 
 
 #endif

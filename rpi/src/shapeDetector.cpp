@@ -77,7 +77,7 @@ int checkImageMatch(cv::Mat transformed) {
   for (int i = 0; i < SYMBOL_CNT; i++) {
     float match = compareImages(img, symbols_img[i]);
 
-    if (match >= 65) {
+    if (match >= MATCH_PERCENTAGE) {
       return i;
     }
   }

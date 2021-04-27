@@ -11,7 +11,7 @@ void setup() {
   PID_init(&pid, KP, KI, KD, &imu_error, 10e-3);
   pinMode(PUSH_BTN, INPUT_PULLUP);
 
-  while (digitalRead(PUSH_BTN));
+  // while (digitalRead(PUSH_BTN));
 }
 
 uint32_t last_print = 0;
@@ -30,6 +30,7 @@ void loop() {
 }
 
 void i2c_recv(int cnt) {
+  Serial.println("YEEES");
   uint8_t recved;
   while (Wire.available()) {
     recved = Wire.read();
@@ -37,27 +38,27 @@ void i2c_recv(int cnt) {
 
   uint8_t mode = recved & EEEBOT_MODE;
   switch (mode) {
-    case TURN90_LEFT:
+    case EEEBOT_TURN90_LEFT:
       imu_desired += 90;
       break;
     
-    case TURN90_RIGHT:
+    case EEEBOT_TURN90_RIGHT:
       imu_desired -= 90;
       break;
 
-    case TURN180:
+    case EEEBOT_TURN180:
       imu_desired += 180;
       break;
 
-    case TURN360:
+    case EEEBOT_TURN360:
       imu_desired += 360;
       break;
 
-    case FORWARD_N:
+    case EEEBOT_FORWARD_N:
       
       break;
 
-    case BACKWARD_N:
+    case EEEBOT_BACKWARD_N:
       
       break;
   }
