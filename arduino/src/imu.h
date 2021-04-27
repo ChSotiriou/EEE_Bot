@@ -9,7 +9,7 @@ float imu_angle = 0;
 
 void imu_setup() {
   Wire.begin();
-  mpu.setup();
+  mpu.setup(0x68);
 
   loadCalibration();
 }
