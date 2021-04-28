@@ -1,11 +1,11 @@
 #include "colorRanges.h"
 
 int getPixelCount(cv::Mat frame, struct colorRange range) {
-  cv::Mat output = filterColor(frame, range);
+  cv::Mat output = filterColor(frame, range, false);
   return cv::countNonZero(output);
 }
 
-cv::Mat filterColor(cv::Mat frame, struct colorRange range) {
+cv::Mat filterColor(cv::Mat frame, struct colorRange range, bool bgr = true) {
   cv::Mat ret;
   cv::cvtColor(frame, ret, cv::COLOR_BGR2HSV);
   cv::inRange(
@@ -14,6 +14,9 @@ cv::Mat filterColor(cv::Mat frame, struct colorRange range) {
     cv::Scalar(range.MAXH, range.MAXS, range.MAXV),
     ret
   );
-  cv::cvtColor(ret, ret, cv::COLOR_GRAY2BGR);
+  
+  if (bgr) {
+    cv::cvtColor(ret, ret, cv::COLOR_GRAY2BGR);
+  }
   return ret;
 }

@@ -14,35 +14,35 @@ struct colorRange {
   int MINV, MAXV;
 };
 
-const struct colorRange RED = {
+const struct colorRange RED_RIGHT = {
   0, 10,
-  180, 255,
-  120, 255
+  50, 255,
+  0, 173
 };
-const struct colorRange ORANGE = {
-  10, 20,
-  180, 255,
-  120, 255
+const struct colorRange RED_LEFT = {
+  170, 179,
+  50, 255,
+  0, 173
 };
 const struct colorRange YELLOW = {
   20, 45,
-  180, 255,
-  120, 255
+  40, 200,
+  0, 173
 };
 const struct colorRange GREEN = {
   45, 70,
-  180, 255,
-  120, 255
+  68, 255,
+  0, 173
 };
 const struct colorRange BLUE = {
-  71, 130,
-  180, 255,
-  120, 255
+  75, 130,
+  40, 200,
+  0, 173
 };
-const struct colorRange PURPLE = {
-  140, 170,
-  130, 200,
-  70, 100
+const struct colorRange BLACK = {
+  0, 179,
+  0, 255,
+  0, 30
 };
 
 const struct colorRange MAGIC_CARD = {
@@ -62,6 +62,6 @@ Determine the number of pixels in a provided range.
 Frame should be in HSV format
 */
 int getPixelCount(cv::Mat frame, struct colorRange range);
-cv::Mat filterColor(cv::Mat frame, struct colorRange range);
+cv::Mat filterColor(cv::Mat frame, struct colorRange range, bool bgr);
 
 #endif /* COLORRANGES_H */

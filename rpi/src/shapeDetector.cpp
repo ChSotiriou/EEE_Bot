@@ -23,8 +23,7 @@ void shapeDetectionSetup() {
 
   for (int i = 0; i < SYMBOL_CNT; i++) {
     cv::resize(symbols_img[i], symbols_img[i], cv::Size(), IMAGE_RESIZE, IMAGE_RESIZE);
-    symbols_img[i] = filterColor(symbols_img[i], MAGIC_IMG);
-    cv::cvtColor(symbols_img[i], symbols_img[i], cv::COLOR_BGR2GRAY);
+    symbols_img[i] = filterColor(symbols_img[i], MAGIC_IMG, false);
   }
 }
 
