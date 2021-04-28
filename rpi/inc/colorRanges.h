@@ -14,47 +14,12 @@ struct colorRange {
   int MINV, MAXV;
 };
 
-const struct colorRange RED_RIGHT = {
-  0, 5,
-  68, 255,
-  0, 173
-};
-const struct colorRange RED_LEFT = {
-  175, 179,
-  68, 255,
-  0, 173
-};
-const struct colorRange YELLOW = {
-  20, 45,
-  40, 200,
-  0, 173
-};
-const struct colorRange GREEN = {
-  45, 70,
-  68, 255,
-  0, 173
-};
-const struct colorRange BLUE = {
-  71, 130,
-  40, 200,
-  0, 173
-};
 const struct colorRange BLACK = {
   0, 179,
   0, 255,
-  0, 30
+  0, 50
 };
 
-const struct colorRange MAGIC_CARD = {
-    140, 168,
-    68, 255,
-    0, 173
-};
-const struct colorRange MAGIC_IMG = {
-    145, 155,
-    250, 255,
-    250, 255
-};
 
 
 /*
