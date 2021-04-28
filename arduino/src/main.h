@@ -29,6 +29,8 @@ drive_s motors;
 #define KD 3
 PID_s pid;
 
+long int movementTimer;
+
 float imu_desired = 0;
 float imu_error = 0;
 

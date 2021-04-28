@@ -48,9 +48,6 @@ int main(int argc, char **argv) {
                     /*
                         Identify which of the four images it actually is
                     */
-                    
-                    // printf("AAAAAAAAAAAAAAAAAAAAA");
-
                     cv::Mat transformedColorFrame = transformPerspective(contours.contours[0], frame, 320 * IMAGE_RESIZE, 240 * IMAGE_RESIZE);
                     frame = transformedColorFrame;
 
@@ -64,8 +61,7 @@ int main(int argc, char **argv) {
 
                     // Find max
                     int maxi = 0;
-                    for (int i = 0; i < 5; i++) {
-                        printf("\t[i] %d: %d\n", i, pixelCount[i]);
+                    for (int i = 0; i < 6; i++) {
                         if (pixelCount[i] > pixelCount[maxi]) {
                             maxi = i;
                         }
@@ -94,7 +90,7 @@ int main(int argc, char **argv) {
                 /* 
                     Send Command to Arduino
                 */
-                if (millis() - shapeDetect_time > 1000) {
+                if (millis() - shapeDetect_time > DETECTION_DELAY) {
                     printf("[i] Found Match: %d\n", match);
 
                     generateArduinoCommand(&bot, match);

@@ -17,7 +17,7 @@ void turn90right(robot_s *bot);
 void turn180(robot_s *bot);
 void turn360(robot_s *bot);
 
-void moveForward(int n);
-void moveReverse(int n);
+void moveForward(robot_s *bot, int n);
+void moveReverse(robot_s *bot, int n);
 
 #endif /* ROBOT_CONTROL */

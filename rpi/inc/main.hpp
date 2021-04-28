@@ -17,6 +17,8 @@
 #include "opencv2/highgui.hpp"
 #include "opencv2/imgproc.hpp"
 
+#define DETECTION_DELAY 3000
+
 const float IMAGE_RESIZE = 1;
 
 #endif /* MAIN_HPP */

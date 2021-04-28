@@ -19,4 +19,7 @@ COMMAND:
 #define EEEBOT_BACKWARD_N      5
 
 
+#define EEEBOT_TIME(X) ((X & 0b11111000) >> 3)
+
+
 #endif

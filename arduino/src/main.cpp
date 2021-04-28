@@ -10,9 +10,10 @@ void setup() {
   drive_setup(&motors, PWMA_LEFT, PWMA_RIGHT, PWMB_LEFT, PWMB_RIGHT);
   PID_init(&pid, KP, KI, KD, &imu_error, 10e-3);
   pinMode(PUSH_BTN, INPUT_PULLUP);
+
+  movementTimer = -1;
 }
 
-uint32_t last_print = 0;
 void loop() {
   imu_update();
 
@@ -25,10 +26,19 @@ void loop() {
   motor_power.r = constrain((float)motors.r - output, -255, 255);
 
   drive(&motor_power);
+
+  if (movementTimer != -1) { // Currently moving
+    if (millis() > movementTimer) {
+      // Stop Robot
+      motors.l = 0;
+      motors.r = 0;
+
+      movementTimer = -1;
+    }
+  }
 }
 
 void i2c_recv(int cnt) {
-  Serial.println("YEEES");
   uint8_t recved;
   while (Wire.available()) {
     recved = Wire.read();
@@ -53,11 +63,19 @@ void i2c_recv(int cnt) {
       break;
 
     case EEEBOT_FORWARD_N:
-      
+      movementTimer = millis() + (EEEBOT_TIME(recved) * 1000);
+
+      motors.l = 150;
+      motors.r = 150;
+
       break;
 
     case EEEBOT_BACKWARD_N:
-      
+      movementTimer = millis() + (EEEBOT_TIME(recved) * 1000);
+
+      motors.l = -150;
+      motors.r = -150;
+
       break;
   }
 }
