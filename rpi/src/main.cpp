@@ -26,6 +26,8 @@ int main(int argc, char **argv) {
         float angle = getAngle(colorFiltered);
         printf("[i] %.3f\n", angle);
 
+        sendAngle(&bot, angle);
+
         cv::imshow("Line Following", frame);
         
         if (cv::waitKey(1) && 0xff == 27) {

@@ -4,7 +4,6 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#include "imu.h"
 #include "pid.h"
 #include "drive.h"
 #include "EEEBot.h"
@@ -26,13 +25,12 @@ drive_s motors;
 
 #define KP 15
 #define KI 0
-#define KD 3
+#define KD 0
 PID_s pid;
 
-long int movementTimer;
-
-float imu_desired = 0;
-float imu_error = 0;
+#define ROBOT_TIMEOUT 1000
+uint32_t i2cTimer = 0;
+static float robotAngle = 0;
 
 void i2c_recv(int recved);
 
