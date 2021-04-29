@@ -22,14 +22,9 @@ int main(int argc, char **argv) {
 
         // Find Line
         cv::Point lineCenter = getLineCenter(frame);
-
-        cv::circle(frame, lineCenter, 1, CV_RGB(255, 0, 255), 5);
-
         lineCenter.y += 2 * frame.cols / 3;
 
         float error = (frame.cols / 2) - lineCenter.x;
-
-        // printf("[i] Error: %.2f\n", error);
 
         sendError(&bot, error);
         
