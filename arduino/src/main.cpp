@@ -17,8 +17,8 @@ void loop() {
   if (millis() - i2cTimer < ROBOT_TIMEOUT) {
     float output = PID_compute(&pid, millis());
 
-    motors.l = constrain(120 + output, -255, 255);
-    motors.r = constrain(120 - output, -255, 255);
+    motors.l = constrain(200 - output, -255, 255);
+    motors.r = constrain(200 + output, -255, 255);
   } else {
     motors.l = 0;
     motors.r = 0;

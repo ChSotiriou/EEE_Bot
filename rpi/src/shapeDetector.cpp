@@ -10,32 +10,37 @@ cv::Mat preprocessImage(cv::Mat frame) {
   return ret;
 }
 
-float getAngle(cv::Mat frame) {
-  float angle = 0;
-  cv::Mat img = preprocessImage(frame);
+cv::Point getLineCenter(cv::Mat frame) {
+  cv::Point ret = {0, 0};
 
-  // Find Edges
-  cv::Mat canny;
-  cv::Canny(img, canny, threshold1, threshold2, 3);
+  // Crop Frame (bottom third)
+  cv::Mat cropped = frame(cv::Rect(0, 2 * frame.rows / 3, frame.cols, frame.rows / 3)); 
 
-  // Dilate Image
-  cv::Mat maskMorph = cv::getStructuringElement(
-      cv::MORPH_ELLIPSE, cv::Size(5, 5)
-  );
-  cv::dilate(canny, canny, maskMorph);
+  // Convert to grayscale
+  cv::Mat gray;
+  cv::cvtColor(cropped, gray, cv::COLOR_BGR2GRAY);
+
+  gray = preprocessImage(gray);
+
+
+  // Add threshold filter
+  cv::threshold(gray, gray, 60, 255, cv::THRESH_BINARY_INV);
 
   // Find Contours
   contours_s contours;
   cv::findContours(
-      canny, contours.contours, contours.hierarchy, 
+      gray, contours.contours, contours.hierarchy, 
       cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE
   );
 
   if (contours.contours.size() > 0) {
-      angle = cv::minAreaRect(contours.contours[0]).angle;
+      cv::Moments M = cv::moments(contours.contours[0]);
 
-      if (angle < -50) angle += 90;
+      ret.x = (int) (M.m10 / M.m00); 
+      ret.y = (int) (M.m01 / M.m00);
   }
 
-  return angle;
+  cv::imshow("Line Following", gray);
+
+  return ret;
 }

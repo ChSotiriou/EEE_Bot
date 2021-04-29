@@ -21,14 +21,17 @@ int main(int argc, char **argv) {
         } 
 
         // Find Line
-        cv::Mat colorFiltered = filterColor(frame, BLACK, true);
+        cv::Point lineCenter = getLineCenter(frame);
 
-        float angle = getAngle(colorFiltered);
-        printf("[i] %.3f\n", angle);
+        cv::circle(frame, lineCenter, 1, CV_RGB(255, 0, 255), 5);
 
-        sendAngle(&bot, angle);
+        lineCenter.y += 2 * frame.cols / 3;
 
-        cv::imshow("Line Following", frame);
+        float error = (frame.cols / 2) - lineCenter.x;
+
+        // printf("[i] Error: %.2f\n", error);
+
+        sendError(&bot, error);
         
         if (cv::waitKey(1) && 0xff == 27) {
             break;

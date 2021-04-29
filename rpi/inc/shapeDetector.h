@@ -19,7 +19,7 @@ struct contours_s {
 };
 
 cv::Mat preprocessImage(cv::Mat frame);
-float getAngle(cv::Mat frame);
+cv::Point getLineCenter(cv::Mat frame);
 
 
 #endif /* SHAPEDETECTOR_H */

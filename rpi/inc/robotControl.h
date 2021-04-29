@@ -8,6 +8,6 @@ struct robot_s {
   Pi2c *i2c;
 };
 
-void sendAngle(robot_s *bot, float angle);
+void sendError(robot_s *bot, float angle);
 
 #endif /* ROBOT_CONTROL */

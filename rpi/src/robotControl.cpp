@@ -1,5 +1,5 @@
 #include "robotControl.h"
 
-void sendAngle(robot_s *bot, float angle) {
-  bot->i2c->i2cWrite((char *) &angle, sizeof(angle));
+void sendError(robot_s *bot, float error) {
+  bot->i2c->i2cWrite((char *) &error, sizeof(error));
 }
