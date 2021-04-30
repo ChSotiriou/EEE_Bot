@@ -102,7 +102,9 @@ int main(int argc, char **argv) {
             }
         }        
 
-        cv::imshow("Symbols", frame);
+        cv::Mat combined;
+        hconcat(frame, colorFiltered, combined);
+        cv::imshow("Symbols", combined);
         
         if (cv::waitKey(1) && 0xff == 27) {
             break;

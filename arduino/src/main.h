@@ -24,7 +24,7 @@
 
 drive_s motors;
 
-#define KP 15
+#define KP 20
 #define KI 0
 #define KD 3
 PID_s pid;

@@ -47,8 +47,8 @@ const struct colorRange BLACK = {
 
 const struct colorRange MAGIC_CARD = {
     140, 168,
-    68, 255,
-    0, 173
+    60, 255,
+    0, 200
 };
 const struct colorRange MAGIC_IMG = {
     145, 155,

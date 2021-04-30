@@ -11,7 +11,7 @@
 
 #define CONTOUR_MIN_AREA 1000
 #define SYMBOL_CNT 10
-#define MATCH_PERCENTAGE 55
+#define MATCH_PERCENTAGE 50
 
 typedef std::vector<cv::Point> contour_t;
 typedef std::vector<contour_t> contours_t;
