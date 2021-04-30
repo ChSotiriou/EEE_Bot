@@ -19,6 +19,6 @@
 
 #define DETECTION_DELAY 3000
 
-const float IMAGE_RESIZE = 0.7;
+const float IMAGE_RESIZE = 0.5;
 
 #endif /* MAIN_HPP */

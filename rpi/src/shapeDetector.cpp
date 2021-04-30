@@ -42,7 +42,7 @@ contours_s getContours(cv::Mat frame) {
 
   // Dilate Image
   cv::Mat maskMorph = cv::getStructuringElement(
-    cv::MORPH_ELLIPSE, cv::Size(11, 11)
+    cv::MORPH_ELLIPSE, cv::Size(5, 5)
   );
   cv::dilate(canny, canny, maskMorph);
 
